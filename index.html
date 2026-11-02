@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHADOWMAP | Continuity Intelligence</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+        <h1>◈ SHADOWMAP</h1>
+        <p id="authSubtitle">Sign in to your workspace</p>
+
+        <form id="loginForm">
+            <label>Employee ID</label>
+            <input id="loginId" placeholder="Enter Employee ID" required>
+
+            <label>Password</label>
+            <input id="loginPassword" type="password" placeholder="Enter Password" required>
+
+            <button class="primary" type="submit">Login</button>
+
+            <p>New employee? <a href="#" id="showSignupLink">Create Account</a></p>
+        </form>
+
+        <form id="signupForm" class="hidden">
+            <label>Employee Name</label>
+            <input id="signupName" placeholder="Enter Name" required>
+
+            <label>Employee ID</label>
+            <input id="signupId" placeholder="Create Employee ID" required>
+
+            <label>Email Address</label>
+            <input id="signupEmail" type="email" placeholder="Enter Email" required>
+
+            <label>Department</label>
+            <input id="signupDepartment" placeholder="Enter Department" required>
+
+            <label>Designation</label>
+            <input id="signupRole" placeholder="Enter Designation" required>
+
+            <label>Password</label>
+            <input id="signupPassword" type="password" placeholder="Create Password" required>
+
+            <label>Confirm Password</label>
+            <input id="confirmPassword" type="password" placeholder="Confirm Password" required>
+
+            <button class="primary" type="submit">Sign Up</button>
+
+            <p>Already registered? <a href="#" id="showLoginLink">Login</a></p>
+        </form>
+
+        <p id="authMessage"></p>
+    </div>
+</div>
+
+<div id="appShell" class="hidden">
+
+    <div class="sidebar">
+        <div class="brand">◈ SHADOWMAP</div>
+        <p class="side-label">MAIN WORKSPACE</p>
+
+        <button class="nav active" data-page="dashboard">⌂ Dashboard</button>
+        <button class="nav" data-page="employees">♙ Employees</button>
+        <button class="nav" data-page="tasks">▤ Task Management</button>
+        <button class="nav" data-page="documents">▣ Document Vault</button>
+        <button class="nav" data-page="handover">⇄ Handover Desk</button>
+        <button class="nav" data-page="knowledge">◉ Knowledge Base</button>
+        <button class="nav" data-page="reports">▥ Reports</button>
+
+        <div class="side-bottom">
+            <span class="online-dot"></span> SYSTEM ONLINE
+            <p>WCC FORGE 48</p>
+        </div>
+    </div>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <span class="eyebrow">CONTINUITY INTELLIGENCE PLATFORM</span>
+                <h2 id="pageTitle">Dashboard Overview</h2>
+            </div>
+
+            <div class="topbar-right">
+                <div class="profile" id="profileName">HM <span>Manager</span></div>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div>
+                <span class="tag">ORGANIZATIONAL RESILIENCE</span>
+                <h1>See the Risk.<br>Protect the Knowledge.</h1>
+                <p>Manage people, critical tasks and organizational knowledge in one place.</p>
+            </div>
+
+            <div class="radar">
+                <div class="radar-line"></div>
+                <div class="radar-dot"></div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="page active-page">
+            <div class="metrics">
+                <div class="metric">
+                    <span>Total Employees</span>
+                    <h2 id="employeeCount">0</h2>
+                    <small>Registered people</small>
+                </div>
+
+                <div class="metric">
+                    <span>Total Tasks</span>
+                    <h2 id="taskCount">0</h2>
+                    <small>Tracked work items</small>
+                </div>
+
+                <div class="metric">
+                    <span>Pending Tasks</span>
+                    <h2 id="pendingCount">0</h2>
+                    <small>Require attention</small>
+                </div>
+
+                <div class="metric">
+                    <span>Knowledge Articles</span>
+                    <h2 id="knowledgeCount">0</h2>
+                    <small>Available resources</small>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="panel">
+                    <h3>Priority Tasks</h3>
+                    <div id="dashboardTasks"></div>
+                </div>
+
+                <div class="panel">
+                    <h3>Continuity Pulse</h3>
+                    <div class="pulse-circle">◈</div>
+                    <h2 class="purple-text">Knowledge Protected</h2>
+                    <p>Track responsibilities and reduce dependency risks.</p>
+                    <div class="progress"><div></div></div>
+                    <small>Keep employee handovers updated.</small>
+                </div>
+            </div>
+        </section>
+
+        <section id="employees" class="page">
+            <div class="section-heading">
+                <div>
+                    <h2>Employee Directory</h2>
+                    <p>Manage organizational people and responsibilities.</p>
+                </div>
+                <button class="primary" onclick="addEmployee()">+ Add Employee</button>
+            </div>
+
+            <input id="employeeSearch" placeholder="Search employees..." oninput="renderEmployees()">
+
+            <div class="panel table-panel">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTable"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="tasks" class="page">
+            <div class="section-heading">
+                <div>
+                    <h2>Task Management</h2>
+                    <p>Assign, monitor and complete critical work.</p>
+                </div>
+                <button class="primary" onclick="addTask()">+ Create Task</button>
+            </div>
+
+            <div id="taskList" class="task-list"></div>
+        </section>
+
+        <section id="documents" class="page">
+            <h2>Document Vault</h2>
+            <p>Store and access important organizational documents.</p>
+
+            <div class="panel upload-panel">
+                <div class="upload-icon">⇧</div>
+                <h3>Upload Documents</h3>
+                <p>Select a file to add it to your document library.</p>
+                <input type="file" id="documentInput" multiple>
+                <button class="primary" onclick="uploadDocuments()">Upload Files</button>
+            </div>
+
+            <div class="panel">
+                <h3>Stored Documents</h3>
+                <div id="documentList"></div>
+            </div>
+        </section>
+
+        <section id="handover" class="page">
+            <h2>Handover Desk</h2>
+            <p>Create structured employee transition summaries.</p>
+
+            <div class="panel form-panel">
+                <label>Outgoing Employee</label>
+                <input id="outgoing" placeholder="Enter employee name">
+
+                <label>Incoming Employee</label>
+                <input id="incoming" placeholder="Enter employee name">
+
+                <label>Key Responsibilities</label>
+                <textarea id="responsibilities" placeholder="Enter responsibilities..."></textarea>
+
+                <label>Pending Work</label>
+                <textarea id="pendingWork" placeholder="Enter pending tasks..."></textarea>
+
+                <label>Important Contacts / Systems</label>
+                <textarea id="contacts" placeholder="Enter important details..."></textarea>
+
+                <button class="primary" onclick="generateHandover()">Generate Handover</button>
+                <div id="handoverResult"></div>
+            </div>
+        </section>
+
+        <section id="knowledge" class="page">
+            <div class="section-heading">
+                <div>
+                    <h2>Knowledge Base</h2>
+                    <p>Centralized company knowledge and procedures.</p>
+                </div>
+                <button class="primary" onclick="addKnowledge()">+ Add Article</button>
+            </div>
+
+            <input id="knowledgeSearch" placeholder="Search articles..." oninput="renderKnowledge()">
+            <div id="knowledgeList"></div>
+        </section>
+
+        <section id="reports" class="page">
+            <h2>Reports & Analytics</h2>
+            <p>View and export organizational information.</p>
+
+            <div class="metrics">
+                <div class="metric">
+                    <span>Employees</span>
+                    <h2 id="reportEmployees">0</h2>
+                </div>
+
+                <div class="metric">
+                    <span>Completed Tasks</span>
+                    <h2 id="completedTasks">0</h2>
+                </div>
+
+                <div class="metric">
+                    <span>Documents</span>
+                    <h2 id="reportDocuments">0</h2>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>Task Status Overview</h3>
+                <div id="taskChart"></div>
+            </div>
+
+            <button class="primary" onclick="exportReport()">Download Report (CSV)</button>
+        </section>
+
+        <footer>SHADOWMAP © 2026 | KNOWLEDGE CONTINUITY PLATFORM</footer>
+    </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
